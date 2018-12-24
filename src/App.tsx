@@ -6,11 +6,6 @@ interface IState {
   todoList: ITodoItem[];
 }
 
-interface ITodoComponent {
-  children: string;
-  key: number;
-  isDone: boolean;
-}
 class App extends Component<{}, IState> {
   constructor(props: {}) {
     super(props);
@@ -57,6 +52,7 @@ const TodoItem: any = styled.li`
 
   &:hover {
     background-color: yellow;
+    cursor: pointer;
   }
 `;
 
