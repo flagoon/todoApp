@@ -1,28 +1,29 @@
 export interface ITodoItem {
-  id: number;
-  todo: string;
+  key: number;
+  name: string;
   isDone: boolean;
+  className?: string;
 }
 
 export const todoList: ITodoItem[] = [
   {
-    id: 1,
-    todo: 'Walk the dog',
+    key: 1,
+    name: 'Walk the dog',
     isDone: false,
   },
   {
-    id: 2,
-    todo: 'Make todo app',
+    key: 2,
+    name: 'Make todo app',
     isDone: false,
   },
   {
-    id: 3,
-    todo: 'Learn react',
+    key: 3,
+    name: 'Learn react',
     isDone: false,
   },
   {
-    id: 4,
-    todo: 'Be a nice guy',
+    key: 4,
+    name: 'Be a nice guy',
     isDone: true,
   },
 ];

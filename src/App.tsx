@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { ITodoItem, todoList } from './data/todo-list';
+import { StyledTodoItem as TodoItem } from './TodoItem';
+import TodoAddInput from './TodoAddInput';
 
 interface IState {
   todoList: ITodoItem[];
+  value: string;
 }
 
 class App extends Component<{}, IState> {
@@ -11,18 +14,53 @@ class App extends Component<{}, IState> {
     super(props);
     this.state = {
       todoList,
+      value: '',
     };
+    this.onSubmit = this.onSubmit.bind(this);
   }
+
+  private calculateKey(): number {
+    const { todoList } = this.state;
+    const lastItemIndex = todoList.length - 1;
+    return todoList[lastItemIndex].key + 1;
+  }
+
+  public onSubmit = (e: React.FormEvent): void => {
+    e.preventDefault();
+    const calculatedKey = this.calculateKey();
+    const newTodoItem = {
+      key: calculatedKey,
+      isDone: false,
+      name: this.state.value,
+    };
+    this.setState({
+      todoList: [...this.state.todoList, newTodoItem],
+      value: '',
+    });
+  };
+
+  public onChangeHandler = (e: React.FormEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    this.setState({ value: e.currentTarget.value });
+  };
 
   public render() {
     const { todoList: todos } = this.state;
     return (
       <MainContainer>
+        <TodoAddInput
+          onSubmit={this.onSubmit}
+          value={this.state.value}
+          onChange={this.onChangeHandler}
+        />
         <TodoContainer>
-          {todos.map((todosz: ITodoItem) => (
-            <TodoItem key={todosz.id} isDone={todosz.isDone}>
-              {todosz.todo}
-            </TodoItem>
+          {todos.map(({ className, key, isDone, name }: ITodoItem) => (
+            <TodoItem
+              className={className}
+              key={key}
+              isDone={isDone}
+              name={name}
+            />
           ))}
         </TodoContainer>
       </MainContainer>
@@ -42,18 +80,6 @@ const TodoContainer = styled.ul`
   margin: 1rem;
   border: 1px solid green;
   padding: 0;
-`;
-
-const TodoItem: any = styled.li`
-  color: ${(props: ITodoItem) => (props.isDone ? 'gray' : 'black')};
-  text-decoration: ${(props: ITodoItem) =>
-    props.isDone ? 'line-through' : 'none'};
-  list-style-type: none;
-
-  &:hover {
-    background-color: yellow;
-    cursor: pointer;
-  }
 `;
 
 export default App;
