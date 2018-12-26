@@ -16,25 +16,15 @@ class App extends Component<{}, IState> {
       todoList,
       value: '',
     };
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.onClickHandler = this.onClickHandler.bind(this);
-  }
-
-  private calculateKey(): number {
-    const { todoList } = this.state;
-    const lastItemIndex = todoList.length - 1;
-    return todoList[lastItemIndex].todoID + 1;
   }
 
   public onSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
-    const calculatedKey = this.calculateKey();
     const newTodoItem = {
-      todoID: calculatedKey,
       isDone: false,
       name: this.state.value,
     };
+
     this.setState({
       todoList: [...this.state.todoList, newTodoItem],
       value: '',
@@ -46,8 +36,16 @@ class App extends Component<{}, IState> {
     this.setState({ value: e.currentTarget.value });
   };
 
-  public onClickHandler = (id: number) => {
-    console.log('id');
+  private extractTodoItem = (id: number): ITodoItem => {
+    return this.state.todoList[id];
+  };
+
+  public onClickHandler = (id: number): void => {
+    const todoItem = this.extractTodoItem(id);
+    todoItem.isDone = !todoItem.isDone;
+    const { todoList: statedItemsList } = this.state;
+    const removedOldListItem = statedItemsList.splice(id, 1, todoItem);
+    this.setState({ todoList: statedItemsList });
   };
 
   public render() {
@@ -60,11 +58,11 @@ class App extends Component<{}, IState> {
           onChange={this.onChangeHandler}
         />
         <TodoContainer>
-          {todos.map(({ className, todoID, isDone, name }: ITodoItem) => (
+          {todos.map(({ isDone, name }: ITodoItem, index) => (
             <TodoItem
-              className={className}
-              key={todoID}
-              todoID={todoID}
+              className={name}
+              key={index}
+              todoID={index}
               isDone={isDone}
               name={name}
               onClickHandler={this.onClickHandler}

@@ -2,8 +2,17 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { ITodoItem } from './data/todo-list';
 
-const TodoItem = ({ className, name, todoID, onClickHandler }: ITodoItem) => (
-  <li className={className}>{name}</li>
+interface IListItem {
+  className: string;
+  name: string;
+  todoID: number;
+  onClickHandler: (id: number) => void;
+}
+
+const TodoItem = ({ className, name, todoID, onClickHandler }: IListItem) => (
+  <li className={className} onClick={() => onClickHandler(todoID)}>
+    {name}
+  </li>
 );
 
 const StyledTodoItem = styled(TodoItem)`
