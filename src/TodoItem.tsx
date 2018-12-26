@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import { ITodoItem } from './data/todo-list';
 
 const TodoItem = ({ className, name, todoID, onClickHandler }: ITodoItem) => (
-  <li className={className} onClick={() => onClickHandler(todoID)}>
-    {name}
-  </li>
+  <li className={className}>{name}</li>
 );
 
 const StyledTodoItem = styled(TodoItem)`
