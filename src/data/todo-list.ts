@@ -1,28 +1,29 @@
 export interface ITodoItem {
-  key: number;
+  todoID: number;
   name: string;
   isDone: boolean;
   className?: string;
+  onClickHandler?: (todoID: number) => any;
 }
 
 export const todoList: ITodoItem[] = [
   {
-    key: 1,
+    todoID: 1,
     name: 'Walk the dog',
     isDone: false,
   },
   {
-    key: 2,
+    todoID: 2,
     name: 'Make todo app',
     isDone: false,
   },
   {
-    key: 3,
+    todoID: 3,
     name: 'Learn react',
     isDone: false,
   },
   {
-    key: 4,
+    todoID: 4,
     name: 'Be a nice guy',
     isDone: true,
   },

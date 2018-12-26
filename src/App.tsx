@@ -17,19 +17,21 @@ class App extends Component<{}, IState> {
       value: '',
     };
     this.onSubmit = this.onSubmit.bind(this);
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onClickHandler = this.onClickHandler.bind(this);
   }
 
   private calculateKey(): number {
     const { todoList } = this.state;
     const lastItemIndex = todoList.length - 1;
-    return todoList[lastItemIndex].key + 1;
+    return todoList[lastItemIndex].todoID + 1;
   }
 
   public onSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     const calculatedKey = this.calculateKey();
     const newTodoItem = {
-      key: calculatedKey,
+      todoID: calculatedKey,
       isDone: false,
       name: this.state.value,
     };
@@ -44,6 +46,10 @@ class App extends Component<{}, IState> {
     this.setState({ value: e.currentTarget.value });
   };
 
+  public onClickHandler = (id: number) => {
+    console.log('id');
+  };
+
   public render() {
     const { todoList: todos } = this.state;
     return (
@@ -54,12 +60,14 @@ class App extends Component<{}, IState> {
           onChange={this.onChangeHandler}
         />
         <TodoContainer>
-          {todos.map(({ className, key, isDone, name }: ITodoItem) => (
+          {todos.map(({ className, todoID, isDone, name }: ITodoItem) => (
             <TodoItem
               className={className}
-              key={key}
+              key={todoID}
+              todoID={todoID}
               isDone={isDone}
               name={name}
+              onClickHandler={this.onClickHandler}
             />
           ))}
         </TodoContainer>
@@ -78,7 +86,6 @@ const MainContainer = styled.div`
 
 const TodoContainer = styled.ul`
   margin: 1rem;
-  border: 1px solid green;
   padding: 0;
 `;
 
