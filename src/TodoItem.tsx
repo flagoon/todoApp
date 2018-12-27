@@ -20,6 +20,13 @@ const StyledTodoItem = styled(TodoItem)`
   text-decoration: ${({ isDone }: ITodoItem) =>
     isDone ? 'line-through' : 'none'};
   list-style-type: none;
+  user-select: none;
+  display: inline;
+  transition: text-decoration 1s;
+
+  & + button {
+    margin: 0 0 0 1rem;
+  }
 
   &:hover {
     font-weight: bold;
