@@ -43,6 +43,7 @@ export default class InputContainer extends React.Component<IProps, IState> {
           value={this.state.value}
           name="todoItem"
           type="text"
+          placeholder="Enter todo item..."
         />
       </Form>
     );
