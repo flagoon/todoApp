@@ -24,11 +24,10 @@ export const StyledDisableButton = styled(DisableButton)`
   background-color: white;
   font-weight: bold;
   color: red;
-  background-color: white;
   transition: background 0.4s;
 
   &:hover {
     cursor: pointer;
-    background: pink;
+    background-color: pink;
   }
 `;
