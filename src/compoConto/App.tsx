@@ -8,14 +8,18 @@ class App extends React.Component {
     todoList,
   };
 
-  public onSubmit = (e: React.FormEvent, todoItem: string): void => {
+  public onSubmit = (
+    e: React.FormEvent,
+    todoItem: string,
+    resetInputValue: () => void
+  ): void => {
     e.preventDefault();
     const newItem = {
       name: todoItem,
       isDone: false,
     };
-    this.setState({ todoList: [...todoList, newItem] });
-    console.log(this.state.todoList);
+    resetInputValue();
+    this.setState({ todoList: [...this.state.todoList, newItem] });
   };
 
   public render() {
