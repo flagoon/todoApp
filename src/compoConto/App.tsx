@@ -9,6 +9,28 @@ class App extends React.Component {
     todoList,
   };
 
+  public onTrashClickHandler = (
+    e: React.MouseEvent<HTMLDivElement>,
+    id: number
+  ) => {
+    e.preventDefault();
+    const { todoList: todos } = this.state;
+    const garbage = todos.splice(id, 1);
+    this.setState({ todoList: todos });
+  };
+
+  public onNameClickHandler = (
+    e: React.MouseEvent<HTMLLIElement>,
+    id: number
+  ) => {
+    e.preventDefault();
+    const { todoList: todos } = this.state;
+    const todoToChange = todos[id];
+    todoToChange.isDone = !todoToChange.isDone;
+    const removedOldListItem = todos.splice(id, 1, todoToChange);
+    this.setState({ todoList: todos });
+  };
+
   public onSubmit = (
     e: React.FormEvent,
     todoItem: string,
@@ -27,7 +49,11 @@ class App extends React.Component {
     return (
       <MainAppArea>
         <InputContainer onSubmit={this.onSubmit} />
-        <TodoList todoList={this.state.todoList} />
+        <TodoList
+          onTrashClickHandler={this.onTrashClickHandler}
+          onNameClickHandler={this.onNameClickHandler}
+          todoList={this.state.todoList}
+        />
       </MainAppArea>
     );
   }
@@ -35,7 +61,7 @@ class App extends React.Component {
 
 const MainAppArea = styled.div`
   width: 540px;
-  height: 450px;
+  min-height: 450px;
   border: 1px solid green;
   margin: 40px auto;
   padding: 20px;

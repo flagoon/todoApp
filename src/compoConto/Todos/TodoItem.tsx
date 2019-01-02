@@ -6,11 +6,21 @@ interface IProps {
   todoId: number;
   isDone: boolean;
   className: string;
+  onNameClickHandler: (e: React.MouseEvent<HTMLLIElement>, id: number) => void;
 }
 
-export const TodoItem = ({ todoId, children, className }: IProps) => {
+export const TodoItem = ({
+  todoId,
+  children,
+  className,
+  onNameClickHandler,
+}: IProps) => {
   return (
-    <li data-id={todoId} className={className}>
+    <li
+      data-id={todoId}
+      className={className}
+      onClick={e => onNameClickHandler(e, todoId)}
+    >
       {children}
     </li>
   );
@@ -22,5 +32,6 @@ export const StyledTodoItem = styled(TodoItem)`
     isDone ? 'line-through' : 'none'};
   list-style-type: none;
   transition: text-decoration 1s;
-  display: inline;
+  padding: 5px;
+  cursor: pointer;
 `;

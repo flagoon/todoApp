@@ -6,14 +6,18 @@ import { StyledDisableButton } from './DisableButton';
 
 interface IProps {
   todoList: ITodoItem[];
+  onTrashClickHandler: (
+    e: React.MouseEvent<HTMLDivElement>,
+    id: number
+  ) => void;
+  onNameClickHandler: (e: React.MouseEvent<HTMLLIElement>, id: number) => void;
 }
 
-const onClick = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-  e.preventDefault();
-  console.log(id);
-};
-
-export const TodoList = ({ todoList }: IProps) => {
+export const TodoList = ({
+  todoList,
+  onTrashClickHandler,
+  onNameClickHandler,
+}: IProps) => {
   return (
     <TodoListArea>
       {todoList.map((el: ITodoItem, index: number) => {
@@ -23,12 +27,13 @@ export const TodoList = ({ todoList }: IProps) => {
               todoId={index}
               isDone={el.isDone}
               className="todoItem"
+              onNameClickHandler={onNameClickHandler}
             >
               {el.name}
             </StyledTodoItem>
             <StyledDisableButton
               className="styledDisableButton"
-              onClick={onClick}
+              onTrashClickHandler={onTrashClickHandler}
               todoId={index}
             />
           </TodoItemArea>

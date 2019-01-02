@@ -3,13 +3,20 @@ import styled from 'styled-components';
 
 interface IProps {
   className: string;
-  onClick: (e: React.MouseEvent<HTMLDivElement>, id: number) => void;
+  onTrashClickHandler: (
+    e: React.MouseEvent<HTMLDivElement>,
+    id: number
+  ) => void;
   todoId: number;
 }
 
-export const DisableButton = ({ className, onClick, todoId }: IProps) => {
+export const DisableButton = ({
+  className,
+  onTrashClickHandler,
+  todoId,
+}: IProps) => {
   return (
-    <div className={className} onClick={e => onClick(e, todoId)}>
+    <div className={className} onClick={e => onTrashClickHandler(e, todoId)}>
       🗑
     </div>
   );
@@ -17,5 +24,11 @@ export const DisableButton = ({ className, onClick, todoId }: IProps) => {
 
 export const StyledDisableButton = styled(DisableButton)`
   margin-right: 0.5rem;
+  padding: 5px;
   cursor: pointer;
+
+  &:hover {
+    background: greenyellow;
+    border-radius: 5px;
+  }
 `;
